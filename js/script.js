@@ -73,3 +73,26 @@ if (themeToggle) {
     setTheme(newTheme);
   });
 }
+
+// Scroll to Top Button
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+function toggleScrollTopBtn() {
+  if (window.scrollY > 300) {
+    scrollTopBtn.classList.add('show');
+  } else {
+    scrollTopBtn.classList.remove('show');
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+if (scrollTopBtn) {
+  window.addEventListener('scroll', toggleScrollTopBtn);
+  scrollTopBtn.addEventListener('click', scrollToTop);
+}
