@@ -104,32 +104,57 @@ if (contactForm) {
     e.preventDefault();
     const btn = contactForm.querySelector('button[type="submit"]');
     const originalText = btn.textContent;
+
+    // UI Loading State
     btn.textContent = 'Enviando...';
     btn.disabled = true;
 
-    const data = new FormData(contactForm);
+    const formData = new FormData(contactForm);
+    const action = contactForm.action;
+
     try {
-      const response = await fetch(contactForm.action, {
+      const response = await fetch(action, {
         method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
 
+      let result;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        result = await response.json();
+      } else {
+        result = { message: await response.text() };
+      }
+
       if (response.ok) {
+        // Success
         btn.textContent = '¡Enviado!';
         btn.style.backgroundColor = '#22c55e'; // Green success
         contactForm.reset();
+        console.log('Formulario enviado con éxito:', result);
+
         setTimeout(() => {
           btn.textContent = originalText;
           btn.style.backgroundColor = '';
           btn.disabled = false;
         }, 3000);
       } else {
-        throw new Error();
+        // Server Error (e.g., 4xx, 5xx)
+        console.error('Error del servidor:', response.status, result);
+        const errorMsg = result.errors
+          ? result.errors.map(e => e.message).join(', ')
+          : (result.message || 'Error desconocido');
+        throw new Error(errorMsg);
       }
     } catch (err) {
+      // Network Error or Server Error
+      console.error('Error de red o de envío:', err);
       btn.textContent = 'Error al enviar';
       btn.style.backgroundColor = '#ef4444'; // Red error
+
       setTimeout(() => {
         btn.textContent = originalText;
         btn.style.backgroundColor = '';
