@@ -96,3 +96,45 @@ if (scrollTopBtn) {
   window.addEventListener('scroll', toggleScrollTopBtn);
   scrollTopBtn.addEventListener('click', scrollToTop);
 }
+
+// Contact Form AJAX
+const contactForm = document.querySelector('.fs-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    const data = new FormData(contactForm);
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        btn.textContent = '¡Enviado!';
+        btn.style.backgroundColor = '#22c55e'; // Green success
+        contactForm.reset();
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.backgroundColor = '';
+          btn.disabled = false;
+        }, 3000);
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      btn.textContent = 'Error al enviar';
+      btn.style.backgroundColor = '#ef4444'; // Red error
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.backgroundColor = '';
+        btn.disabled = false;
+      }, 3000);
+    }
+  });
+}
