@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Science+Gothic:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ====== Reset & base ====== */
 *,
@@ -19,7 +18,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Anton", sans-serif;
+  font-family: "Inter", sans-serif;
   line-height: 1.6;
   color: #0b1220;
   background: #ffffff;
@@ -73,6 +72,8 @@ p {
   --primary: #0a84ff;
   --primary-ink: #ffffff;
   --border: #e3e7ee;
+  --font-body: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
 }
 
 /* Dark mode variables */
@@ -812,7 +813,7 @@ fieldset {
 
 .fs-fieldset-title {
   color: var(--color-text-default);
-  font-family: var(--font-family-display);
+  font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1rem;
@@ -829,7 +830,7 @@ fieldset {
 .fs-label {
   color: var(--color-text-default);
   display: block;
-  font-family: var(--font-family-display);
+  font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1rem;
@@ -1230,8 +1231,8 @@ body.dark-mode .social svg {
   }
 }
 
-.anton-regular {
-  font-family: "Anton", sans-serif;
+.inter-regular {
+  font-family: var(--font-body);
   font-weight: 400;
   font-style: normal;
 }
